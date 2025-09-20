@@ -1,0 +1,19 @@
+﻿# Archivos de compilación
+bin/
+obj/
+.vs/
+
+# Archivos de usuario de Visual Studio
+*.user
+*.suo
+
+# Artefactos generados
+Data2Web.Presentation/Pages/
+Data2Web.Data/Export/
+
+# Logs
+log.txt
+*.log
+
+# Config locales opcionales
+appsettings.Development.json

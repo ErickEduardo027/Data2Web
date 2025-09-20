@@ -46,10 +46,14 @@ internal class Program
         // 6. Scope para probar que arranca bien
         using var scope = host.Services.CreateScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogInformation("✅ Fase 1 configurada correctamente. Host en marcha.");
+        logger.LogInformation("✅ ejecutado correctamente. Host en marcha.");
 
         Console.WriteLine("Data2Web listo con DI, Logging y SQL Server. 🚀");
         await Task.CompletedTask;
+
     }
+
+
 }
+
 

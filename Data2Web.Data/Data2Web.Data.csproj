@@ -14,8 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Export\" />
-    <Folder Include="Models\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

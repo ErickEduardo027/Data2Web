@@ -7,18 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Generators\**" />
-    <Compile Remove="Services\**" />
-    <Compile Remove="Utils\**" />
-    <EmbeddedResource Remove="Generators\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <EmbeddedResource Remove="Utils\**" />
-    <None Remove="Generators\**" />
-    <None Remove="Services\**" />
-    <None Remove="Utils\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Handlebars.Net" Version="2.1.6" />
   </ItemGroup>
 

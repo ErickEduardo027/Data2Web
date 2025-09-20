@@ -35,6 +35,7 @@ internal class Program
                 services.AddScoped<IPasatiempoRepository, PasatiempoRepository>();
                 services.AddScoped<IYouTuberRepository, YouTuberRepository>();
                 services.AddScoped<IAnimeSerieRepository, AnimeSerieRepository>();
+                services.AddScoped<IGenealogiaRepository, GenealogiaRepository>();
 
 
             });
@@ -51,13 +52,15 @@ internal class Program
             var pasatiempoRepo = scope.ServiceProvider.GetRequiredService<IPasatiempoRepository>();
             var ytRepo = scope.ServiceProvider.GetRequiredService<IYouTuberRepository>();
             var animeRepo = scope.ServiceProvider.GetRequiredService<IAnimeSerieRepository>();
+            var genealogiaRepo = scope.ServiceProvider.GetRequiredService<IGenealogiaRepository>();
 
 
-            
+
             var persona = await personaRepo.GetPrincipalAsync();
             var animes = await animeRepo.GetByPersonaIdAsync(persona.PersonaId);
             var youtubers = await ytRepo.GetAllAsync();
-            
+            var familiares = await genealogiaRepo.GetByPersonaIdAsync(persona.PersonaId);
+
 
             if (persona != null)
             {
@@ -85,6 +88,12 @@ internal class Program
                     Console.WriteLine($"   {anime.Descripcion}");
                     Console.WriteLine($"   Carátula: {anime.CaratulaUrl}");
                     Console.WriteLine($"   Trailer: https://www.youtube.com/watch?v={anime.TrailerYoutubeId}");
+                }
+
+                Console.WriteLine("👨‍👩‍👦 Genealogía:");
+                foreach (var fam in familiares)
+                {
+                    Console.WriteLine($" - {fam.Parentesco}: {fam.Nombre} (Foto: {fam.FotoUrl})");
                 }
             }
             else

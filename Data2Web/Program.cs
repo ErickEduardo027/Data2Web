@@ -2,11 +2,11 @@ using System.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
-using Data2Web.Data.Context;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
-// TODO: importa también tus repos, services y generators
+using Data2Web.Data.Context;
+using Data2Web.Data.Repositories;
 
 internal class Program
 {
@@ -30,30 +30,49 @@ internal class Program
                 services.AddScoped<IDbConnection>(sp =>
                     sp.GetRequiredService<IDbConnectionFactory>().Create());
 
-                // 3. TODO: agrega tus repositorios
-                // services.AddScoped<IPersonaRepository, PersonaRepository>();
-
-                // 4. TODO: agrega tus servicios
-                // services.AddScoped<IPersonaService, PersonaService>();
-
-                // 5. TODO: agrega generadores (PageGenerator, JsonExporter)
-                // services.AddSingleton<IPageGenerator, PageGenerator>();
-                // services.AddSingleton<IJsonExporter, JsonExporter>();
+                // 3. Repositorios
+                services.AddScoped<IPersonaRepository, PersonaRepository>();
+                services.AddScoped<IPasatiempoRepository, PasatiempoRepository>();
             });
 
         var host = builder.Build();
 
-        // 6. Scope para probar que arranca bien
+        // 4. Scope para probar que arranca bien
         using var scope = host.Services.CreateScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogInformation("✅ ejecutado correctamente. Host en marcha.");
 
-        Console.WriteLine("Data2Web listo con DI, Logging y SQL Server. 🚀");
-        await Task.CompletedTask;
+        try
+        {
+            var personaRepo = scope.ServiceProvider.GetRequiredService<IPersonaRepository>();
+            var pasatiempoRepo = scope.ServiceProvider.GetRequiredService<IPasatiempoRepository>();
 
+            var persona = await personaRepo.GetPrincipalAsync();
+
+            if (persona != null)
+            {
+                Console.WriteLine($"👤 Persona principal: {persona.Nombres} {persona.Apellidos} (Nacido: {persona.FechaNacimiento:dd/MM/yyyy})");
+
+                var pasatiempos = await pasatiempoRepo.GetByPersonaIdAsync(persona.PersonaId);
+
+                Console.WriteLine("🎨 Pasatiempos:");
+                foreach (var p in pasatiempos)
+                {
+                    Console.WriteLine($" - {p.Titulo}: {p.Descripcion}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("⚠️ No se encontró la persona principal en la BD.");
+            }
+
+            logger.LogInformation("✅ Data2Web ejecutado correctamente.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "❌ Error durante la ejecución.");
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
-
-
 }
 
 

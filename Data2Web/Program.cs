@@ -33,6 +33,8 @@ internal class Program
                 // 3. Repositorios
                 services.AddScoped<IPersonaRepository, PersonaRepository>();
                 services.AddScoped<IPasatiempoRepository, PasatiempoRepository>();
+                services.AddScoped<IYouTuberRepository, YouTuberRepository>();
+
             });
 
         var host = builder.Build();
@@ -45,8 +47,11 @@ internal class Program
         {
             var personaRepo = scope.ServiceProvider.GetRequiredService<IPersonaRepository>();
             var pasatiempoRepo = scope.ServiceProvider.GetRequiredService<IPasatiempoRepository>();
+            var ytRepo = scope.ServiceProvider.GetRequiredService<IYouTuberRepository>();
+            
 
             var persona = await personaRepo.GetPrincipalAsync();
+            var youtubers = await ytRepo.GetAllAsync();
 
             if (persona != null)
             {
@@ -58,6 +63,13 @@ internal class Program
                 foreach (var p in pasatiempos)
                 {
                     Console.WriteLine($" - {p.Titulo}: {p.Descripcion}");
+                }
+
+                Console.WriteLine("📺 YouTubers favoritos:");
+                foreach (var yt in youtubers)
+                {
+                    Console.WriteLine($" - {yt.Nombre} ({yt.UrlCanal})");
+                    Console.WriteLine($"   {yt.Descripcion}");
                 }
             }
             else

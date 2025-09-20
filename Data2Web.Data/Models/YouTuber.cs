@@ -11,7 +11,7 @@ namespace Data2Web.Data.Models
         public int YouTuberId { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
-        public string CanalUrl { get; set; } = string.Empty;
+        public string UrlCanal { get; set; } = string.Empty;
         public string? LogoUrl { get; set; }
     }
 }

@@ -28,8 +28,6 @@ namespace Data2Web.Data.Context
         {
             return new SqlConnection(_connectionString);
         }
-
-
     }
 }
 

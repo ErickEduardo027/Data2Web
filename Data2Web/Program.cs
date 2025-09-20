@@ -36,6 +36,7 @@ internal class Program
                 services.AddScoped<IYouTuberRepository, YouTuberRepository>();
                 services.AddScoped<IAnimeSerieRepository, AnimeSerieRepository>();
                 services.AddScoped<IGenealogiaRepository, GenealogiaRepository>();
+                services.AddScoped<ITimelineRepository, TimelineRepository>();
 
 
             });
@@ -53,13 +54,14 @@ internal class Program
             var ytRepo = scope.ServiceProvider.GetRequiredService<IYouTuberRepository>();
             var animeRepo = scope.ServiceProvider.GetRequiredService<IAnimeSerieRepository>();
             var genealogiaRepo = scope.ServiceProvider.GetRequiredService<IGenealogiaRepository>();
-
+            var timelineRepo = scope.ServiceProvider.GetRequiredService<ITimelineRepository>();
 
 
             var persona = await personaRepo.GetPrincipalAsync();
             var animes = await animeRepo.GetByPersonaIdAsync(persona.PersonaId);
             var youtubers = await ytRepo.GetAllAsync();
             var familiares = await genealogiaRepo.GetByPersonaIdAsync(persona.PersonaId);
+            var eventos = await timelineRepo.GetByPersonaIdAsync(persona.PersonaId);
 
 
             if (persona != null)
@@ -95,6 +97,14 @@ internal class Program
                 {
                     Console.WriteLine($" - {fam.Parentesco}: {fam.Nombre} (Foto: {fam.FotoUrl})");
                 }
+
+                Console.WriteLine("🗓️ Línea de tiempo:");
+                foreach (var ev in eventos)
+                {
+                    Console.WriteLine($" - {ev.Fecha:dd/MM/yyyy}: {ev.Titulo} ({ev.Descripcion})");
+                }
+
+
             }
             else
             {

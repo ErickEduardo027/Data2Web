@@ -34,6 +34,8 @@ internal class Program
                 services.AddScoped<IPersonaRepository, PersonaRepository>();
                 services.AddScoped<IPasatiempoRepository, PasatiempoRepository>();
                 services.AddScoped<IYouTuberRepository, YouTuberRepository>();
+                services.AddScoped<IAnimeSerieRepository, AnimeSerieRepository>();
+
 
             });
 
@@ -48,10 +50,14 @@ internal class Program
             var personaRepo = scope.ServiceProvider.GetRequiredService<IPersonaRepository>();
             var pasatiempoRepo = scope.ServiceProvider.GetRequiredService<IPasatiempoRepository>();
             var ytRepo = scope.ServiceProvider.GetRequiredService<IYouTuberRepository>();
-            
+            var animeRepo = scope.ServiceProvider.GetRequiredService<IAnimeSerieRepository>();
 
+
+            
             var persona = await personaRepo.GetPrincipalAsync();
+            var animes = await animeRepo.GetByPersonaIdAsync(persona.PersonaId);
             var youtubers = await ytRepo.GetAllAsync();
+            
 
             if (persona != null)
             {
@@ -70,6 +76,15 @@ internal class Program
                 {
                     Console.WriteLine($" - {yt.Nombre} ({yt.UrlCanal})");
                     Console.WriteLine($"   {yt.Descripcion}");
+                }
+
+                Console.WriteLine("🎬 Animes / Series favoritas:");
+                foreach (var anime in animes)
+                {
+                    Console.WriteLine($" - {anime.Titulo}");
+                    Console.WriteLine($"   {anime.Descripcion}");
+                    Console.WriteLine($"   Carátula: {anime.CaratulaUrl}");
+                    Console.WriteLine($"   Trailer: https://www.youtube.com/watch?v={anime.TrailerYoutubeId}");
                 }
             }
             else

@@ -37,7 +37,7 @@ internal class Program
                 services.AddScoped<IAnimeSerieRepository, AnimeSerieRepository>();
                 services.AddScoped<IGenealogiaRepository, GenealogiaRepository>();
                 services.AddScoped<ITimelineRepository, TimelineRepository>();
-
+                services.AddScoped<ISocialLinksRepository, SocialLinksRepository>();
 
             });
 
@@ -55,13 +55,14 @@ internal class Program
             var animeRepo = scope.ServiceProvider.GetRequiredService<IAnimeSerieRepository>();
             var genealogiaRepo = scope.ServiceProvider.GetRequiredService<IGenealogiaRepository>();
             var timelineRepo = scope.ServiceProvider.GetRequiredService<ITimelineRepository>();
-
+            var socialRepo = scope.ServiceProvider.GetRequiredService<ISocialLinksRepository>();
 
             var persona = await personaRepo.GetPrincipalAsync();
             var animes = await animeRepo.GetByPersonaIdAsync(persona.PersonaId);
             var youtubers = await ytRepo.GetAllAsync();
             var familiares = await genealogiaRepo.GetByPersonaIdAsync(persona.PersonaId);
             var eventos = await timelineRepo.GetByPersonaIdAsync(persona.PersonaId);
+            var redes = await socialRepo.GetByPersonaIdAsync(persona.PersonaId);
 
 
             if (persona != null)
@@ -102,6 +103,12 @@ internal class Program
                 foreach (var ev in eventos)
                 {
                     Console.WriteLine($" - {ev.Fecha:dd/MM/yyyy}: {ev.Titulo} ({ev.Descripcion})");
+                }
+
+                Console.WriteLine("🌐 Redes sociales:");
+                foreach (var s in redes)
+                {
+                    Console.WriteLine($" - {s.RedSocial}: {s.Url}");
                 }
 
 

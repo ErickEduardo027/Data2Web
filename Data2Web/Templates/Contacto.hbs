@@ -1,0 +1,25 @@
+{{#> _Layout title="Contacto" active="contacto"}}
+<h2>📬 Contáctame</h2>
+<p class="mb-4">Completa el formulario y me pondré en contacto contigo (simulación estática).</p>
+
+<form id="contactForm" class="shadow-sm p-4 bg-light rounded">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="mensaje" class="form-label">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" class="form-control" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+{{/_Layout}}
+
+

@@ -1,0 +1,22 @@
+{{#> _Layout title="Línea de Tiempo" active="timeline"}}
+
+<h1>🗓️ Mi Línea de Tiempo</h1>
+<ul class="list-group list-group-flush">
+    {{#each Items}}
+    <li class="list-group-item">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5>{{Titulo}}</h5>
+                <p>{{Descripcion}}</p>
+            </div>
+            <span class="badge bg-primary">{{Fecha}}</span>
+        </div>
+    </li>
+    {{/each}}
+</ul>
+
+{{/_Layout}}
+
+
+
+

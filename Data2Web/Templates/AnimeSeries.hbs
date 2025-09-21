@@ -1,0 +1,17 @@
+{{#> _Layout title="Anime/Series" active="animeseries"}}
+<h2>🎬 Mis Animes y Series Favoritas</h2>
+<div class="row">
+    {{#each this}}
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <img src="../Assets/img/animeseries/{{CaratulaUrl}}" class="card-img-top" alt="{{Titulo}}">
+            <div class="card-body">
+                <h5 class="card-title">{{Titulo}}</h5>
+                <p class="card-text">{{Descripcion}}</p>
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/{{TrailerYoutubeId}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/_Layout}}

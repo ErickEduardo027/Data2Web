@@ -1,0 +1,54 @@
+{{#> _Layout title="Sobre mí" active="sobre-mi"}}
+<h2>👤 Sobre mí</h2>
+
+<!-- Datos personales -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h3>{{Datos.Nombres}} {{Datos.Apellidos}}</h3>
+        <p><strong>Fecha de nacimiento:</strong> {{Datos.FechaNacimiento}}</p>
+    </div>
+</div>
+
+<!-- Genealogía -->
+<h3 class="mt-4">👨‍👩‍👦 Genealogía</h3>
+<div class="row">
+    {{#each Genealogia}}
+    <div class="col-md-3 mb-3">
+        <div class="card text-center shadow-sm">
+            <img src="../Assets/img/genealogia/{{FotoUrl}}" class="card-img-top" alt="{{Nombre}}">
+            <div class="card-body">
+                <h5 class="card-title">{{Nombre}}</h5>
+                <p class="card-text"><small>{{Parentesco}}</small></p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<!-- Línea de tiempo -->
+<h3 class="mt-4">🗓️ Línea de Tiempo</h3>
+<ul class="timeline list-unstyled">
+    {{#each Timeline}}
+    <li class="mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{Titulo}}</h5>
+                <p class="card-text">{{Descripcion}}</p>
+                <p class="text-muted"><small>{{Fecha}}</small></p>
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</ul>
+
+<!-- Redes sociales -->
+<h3 class="mt-4">🌐 Redes Sociales</h3>
+<div class="d-flex gap-3 flex-wrap">
+    {{#each RedesSociales}}
+    <a href="{{Url}}" target="_blank" class="d-flex align-items-center btn btn-outline-dark">
+        {{{IconoSvg}}}
+        <span class="ms-2">{{RedSocial}}</span>
+    </a>
+    {{/each}}
+</div>
+{{/_Layout}}

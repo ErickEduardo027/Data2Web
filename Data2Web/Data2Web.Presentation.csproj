@@ -9,11 +9,51 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Templates\AnimeSeries.hbs" />
+    <None Remove="Templates\Contacto.hbs" />
+    <None Remove="Templates\Error.hbs" />
+    <None Remove="Templates\Index.hbs" />
+    <None Remove="Templates\Pasatiempos.hbs" />
+    <None Remove="Templates\SobreMi.hbs" />
+    <None Remove="Templates\SocialLinks.hbs" />
+    <None Remove="Templates\Timeline.hbs" />
+    <None Remove="Templates\YouTubers.hbs" />
+    <None Remove="Templates\_Layout.hbs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\AnimeSeries.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Contacto.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Error.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Index.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Pasatiempos.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\SobreMi.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\SocialLinks.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Timeline.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\YouTubers.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\_Layout.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

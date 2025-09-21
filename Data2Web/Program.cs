@@ -1,6 +1,7 @@
 using Data2Web.Data.Context;
 using Data2Web.Data.Repositories;
 using Data2Web.Data.Repositories.Interfaces;
+using Data2Web.Logic.DTOs;
 using Data2Web.Logic.Generators;
 using Data2Web.Logic.Services;
 using Data2Web.Logic.Services.InterfacesDeServicios;
@@ -16,7 +17,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        //Host con configuración y logging
+        // Host con configuración y logging
         var builder = Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(cfg =>
             {
@@ -29,12 +30,12 @@ internal class Program
             )
             .ConfigureServices((ctx, services) =>
             {
-                //Registro de infraestructura
+                // Infraestructura
                 services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
                 services.AddScoped<IDbConnection>(sp =>
                     sp.GetRequiredService<IDbConnectionFactory>().Create());
 
-                //Repositorios
+                // Repositorios
                 services.AddScoped<IPersonaRepository, PersonaRepository>();
                 services.AddScoped<IPasatiempoRepository, PasatiempoRepository>();
                 services.AddScoped<IYouTuberRepository, YouTuberRepository>();
@@ -43,7 +44,7 @@ internal class Program
                 services.AddScoped<ITimelineRepository, TimelineRepository>();
                 services.AddScoped<ISocialLinksRepository, SocialLinksRepository>();
 
-                //servicios
+                // Servicios
                 services.AddScoped<IPersonaService, PersonaService>();
                 services.AddScoped<IPasatiempoService, PasatiempoService>();
                 services.AddScoped<IYouTuberService, YouTuberService>();
@@ -52,88 +53,143 @@ internal class Program
                 services.AddScoped<ITimelineService, TimelineService>();
                 services.AddScoped<ISocialLinksService, SocialLinksService>();
 
-                //mas de la capa logica
+                // Utilidades
                 services.AddHttpClient<ImageDownloader>();
                 services.AddSingleton<JsonExporter>();
                 services.AddSingleton<PageGenerator>();
-
             });
 
         var host = builder.Build();
 
-        //Scope para probar que arranca bien
         using var scope = host.Services.CreateScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-        //pruebas
+        string exportDir = Path.Combine(AppContext.BaseDirectory, "Export");
+        string pagesDir = Path.Combine(AppContext.BaseDirectory, "Pages");
+
+        Directory.CreateDirectory(exportDir);
+        Directory.CreateDirectory(pagesDir);
+
         try
         {
-            var personaRepo = scope.ServiceProvider.GetRequiredService<IPersonaRepository>();
-            var pasatiempoRepo = scope.ServiceProvider.GetRequiredService<IPasatiempoRepository>();
-            var ytRepo = scope.ServiceProvider.GetRequiredService<IYouTuberRepository>();
-            var animeRepo = scope.ServiceProvider.GetRequiredService<IAnimeSerieRepository>();
-            var genealogiaRepo = scope.ServiceProvider.GetRequiredService<IGenealogiaRepository>();
-            var timelineRepo = scope.ServiceProvider.GetRequiredService<ITimelineRepository>();
-            var socialRepo = scope.ServiceProvider.GetRequiredService<ISocialLinksRepository>();
-
-            var persona = await personaRepo.GetPrincipalAsync();
-            var animes = await animeRepo.GetByPersonaIdAsync(persona.PersonaId);
-            var youtubers = await ytRepo.GetAllAsync();
-            var familiares = await genealogiaRepo.GetByPersonaIdAsync(persona.PersonaId);
-            var eventos = await timelineRepo.GetByPersonaIdAsync(persona.PersonaId);
-            var redes = await socialRepo.GetByPersonaIdAsync(persona.PersonaId);
-
-            var socialService = scope.ServiceProvider.GetRequiredService<ISocialLinksService>();
-            var redess = await socialService.GetByPersonaIdAsync(1); // cambia 1 por el Id real
-
+            // Servicios
             var personaService = scope.ServiceProvider.GetRequiredService<IPersonaService>();
-            var personaDTO = await personaService.GetPersonaPrincipalAsync();
-
+            var pasatiempoService = scope.ServiceProvider.GetRequiredService<IPasatiempoService>();
             var ytService = scope.ServiceProvider.GetRequiredService<IYouTuberService>();
-            var youtuberss = await ytService.GetAllAsync();
+            var animeService = scope.ServiceProvider.GetRequiredService<IAnimeSerieService>();
+            var timelineService = scope.ServiceProvider.GetRequiredService<ITimelineService>();
+            var socialService = scope.ServiceProvider.GetRequiredService<ISocialLinksService>();
 
-            if (personaDTO?.Datos != null)
-            {
-                Console.WriteLine("🌐 Redes Sociales:");
-                foreach (var r in redess)
-                {
-                    Console.WriteLine($" - {r.Plataforma}: {r.Url}");
-                }
+            var jsonExp = scope.ServiceProvider.GetRequiredService<JsonExporter>();
+            var pageGen = scope.ServiceProvider.GetRequiredService<PageGenerator>();
 
-                var p = personaDTO.Datos;
-                Console.WriteLine($"👤 Persona principal: {p.Nombres} {p.Apellidos} (Nacido: {p.FechaNacimiento:dd/MM/yyyy})");
-
-                Console.WriteLine("👨‍👩‍👦 Genealogía:");
-                foreach (var fam in personaDTO.Genealogia)
-                    Console.WriteLine($" - {fam.Parentesco}: {fam.Nombre} (Foto: {fam.FotoUrl})");
-
-                Console.WriteLine("🗓️ Línea de tiempo:");
-                foreach (var ev in personaDTO.Timeline)
-                    Console.WriteLine($" - {ev.Fecha:dd/MM/yyyy}: {ev.Titulo} ({ev.Descripcion})");
-
-                Console.WriteLine("🌐 Redes sociales:");
-                foreach (var s in personaDTO.RedesSociales)
-                    Console.WriteLine($" - {s.RedSocial}: {s.Url}");
-
-                Console.WriteLine("📺 YouTubers favoritos:");
-                foreach (var yt in youtuberss)
-                {
-                    Console.WriteLine($" - {yt.Nombre} ({yt.UrlCanal})");
-                    Console.WriteLine($"   {yt.Descripcion}");
-                    Console.WriteLine($"   Logo en: {yt.LogoPath}");
-                }
-            }
-            else
+            // ====================
+            // Persona principal
+            // ====================
+            var personaDTO = await personaService.GetPersonaPrincipalAsync();
+            if (personaDTO?.Datos == null)
             {
                 Console.WriteLine("⚠️ No se encontró la persona principal.");
+                return;
             }
 
-            logger.LogInformation("✅ Data2Web ejecutado correctamente.");
+            await jsonExp.ExportAsync(new[] { personaDTO }, Path.Combine(exportDir, "persona.json"));
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "SobreMi.hbs"),
+                personaDTO,
+                Path.Combine(pagesDir, "sobre-mi.html")
+            );
+
+            // ====================
+            // Pasatiempos
+            // ====================
+            var pasatiempos = await pasatiempoService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
+            await jsonExp.ExportAsync(pasatiempos, Path.Combine(exportDir, "pasatiempos.json"));
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "Pasatiempos.hbs"),
+                new { Items = pasatiempos },
+                Path.Combine(pagesDir, "pasatiempos.html")
+            );
+
+            // ====================
+            // YouTubers
+            // ====================
+            var youtubers = await ytService.GetAllAsync();
+            await jsonExp.ExportAsync(youtubers, Path.Combine(exportDir, "youtubers.json"));
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "YouTubers.hbs"),
+                new { Items = youtubers },
+                Path.Combine(pagesDir, "youtubers.html")
+            );
+
+            // ====================
+            // AnimeSeries
+            // ====================
+            var animes = await animeService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
+            await jsonExp.ExportAsync(animes, Path.Combine(exportDir, "animeseries.json"));
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "AnimeSeries.hbs"),
+                new { Items = animes },
+                Path.Combine(pagesDir, "animeseries.html")
+            );
+
+            // ====================
+            // Timeline
+            // ====================
+            var timeline = await timelineService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
+            await jsonExp.ExportAsync(timeline, Path.Combine(exportDir, "timeline.json"));
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "Timeline.hbs"),
+                new { Items = timeline },
+                Path.Combine(pagesDir, "timeline.html")
+            );
+
+            // ====================
+            // Redes Sociales
+            // ====================
+            var redes = await socialService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
+            await jsonExp.ExportAsync(redes, Path.Combine(exportDir, "sociallinks.json"));
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "SocialLinks.hbs"),
+                new { Items = redes },
+                Path.Combine(pagesDir, "sociallinks.html")
+            );
+
+            // ====================
+            // Index (sin modelo complejo)
+            // ====================
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "Index.hbs"),
+                new { },
+                Path.Combine(pagesDir, "index.html")
+            );
+
+            // ====================
+            // Contacto (estático)
+            // ====================
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "Contacto.hbs"),
+                new { },
+                Path.Combine(pagesDir, "contacto.html")
+            );
+
+            Console.WriteLine("✅ Todos los JSON y HTML generados correctamente.");
+            logger.LogInformation("🚀 Data2Web ejecutado correctamente.");
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "❌ Error durante la ejecución.");
-            Console.WriteLine($"Error: {ex.Message}");
+
+            var pageGen = scope.ServiceProvider.GetRequiredService<PageGenerator>();
+            string errorPath = Path.Combine(pagesDir, "error.html");
+
+            await pageGen.GenerateAsync(
+                Path.Combine(AppContext.BaseDirectory, "Templates", "Error.hbs"),
+                new { Mensaje = ex.Message },
+                errorPath
+            );
+
+            Console.WriteLine($"❌ Error: {ex.Message} — Se generó error.html");
         }
     }
 }

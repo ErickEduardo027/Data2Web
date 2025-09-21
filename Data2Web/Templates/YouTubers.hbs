@@ -1,0 +1,23 @@
+{{#> _Layout title="YouTubers" active="youtubers"}}
+<h2>📺 Mis YouTubers Favoritos</h2>
+<div class="row">
+    {{#each this}}
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <img src="../Assets/img/youtubers/{{LogoPath}}" class="card-img-top" alt="{{Nombre}}">
+            <div class="card-body">
+                <h5 class="card-title">{{Nombre}}</h5>
+                <p class="card-text">{{Descripcion}}</p>
+                <a href="{{UrlCanal}}" target="_blank" class="btn btn-danger">Ir al canal</a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/_Layout}}
+
+
+
+
+
+

@@ -11,18 +11,18 @@ namespace Data2Web.Logic.Services
 {
     public class AnimeSerieService : IAnimeSerieService
     {
-        private readonly IAnimeSerieRepository _animeRepo;
+        private readonly IAnimeSerieRepository _repo;
 
-        public AnimeSerieService(IAnimeSerieRepository animeRepo)
+        public AnimeSerieService(IAnimeSerieRepository repo)
         {
-            _animeRepo = animeRepo;
+            _repo = repo;
         }
 
-        public async Task<IEnumerable<AnimeSerieDTO>> GetAllAsync()
+        public async Task<IEnumerable<AnimeSerieDTO>> GetByPersonaIdAsync(int personaId)
         {
-            var entities = await _animeRepo.GetAllAsync();
+            var animes = await _repo.GetByPersonaIdAsync(personaId);
 
-            return entities.Select(a => new AnimeSerieDTO
+            return animes.Select(a => new AnimeSerieDTO
             {
                 AnimeSerieId = a.AnimeSerieId,
                 Titulo = a.Titulo,

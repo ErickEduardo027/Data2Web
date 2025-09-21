@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data2Web.Logic.Generators
 {
-    internal class Class1
+    internal class JsonExporter
     {
     }
 }

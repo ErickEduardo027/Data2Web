@@ -1,13 +1,14 @@
-using System.Data;
+using Data2Web.Data.Context;
+using Data2Web.Data.Repositories;
+using Data2Web.Data.Repositories.Interfaces;
+using Data2Web.Logic.Services;
+using Data2Web.Logic.Services.InterfacesDeServicios;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
-using Data2Web.Data.Context;
-using Data2Web.Data.Repositories;
-using Data2Web.Data.Repositories.Interfaces;
+using System.Data;
 
 internal class Program
 {
@@ -39,6 +40,8 @@ internal class Program
                 services.AddScoped<IGenealogiaRepository, GenealogiaRepository>();
                 services.AddScoped<ITimelineRepository, TimelineRepository>();
                 services.AddScoped<ISocialLinksRepository, SocialLinksRepository>();
+                services.AddScoped<IPersonaService, PersonaService>();
+
 
             });
 
@@ -66,57 +69,29 @@ internal class Program
             var redes = await socialRepo.GetByPersonaIdAsync(persona.PersonaId);
 
 
-            if (persona != null)
+            var personaService = scope.ServiceProvider.GetRequiredService<IPersonaService>();
+            var personaDTO = await personaService.GetPersonaPrincipalAsync();
+
+            if (personaDTO?.Datos != null)
             {
-                Console.WriteLine($"👤 Persona principal: {persona.Nombres} {persona.Apellidos} (Nacido: {persona.FechaNacimiento:dd/MM/yyyy})");
-
-                var pasatiempos = await pasatiempoRepo.GetByPersonaIdAsync(persona.PersonaId);
-
-                Console.WriteLine("🎨 Pasatiempos:");
-                foreach (var p in pasatiempos)
-                {
-                    Console.WriteLine($" - {p.Titulo}: {p.Descripcion}");
-                }
-
-                Console.WriteLine("📺 YouTubers favoritos:");
-                foreach (var yt in youtubers)
-                {
-                    Console.WriteLine($" - {yt.Nombre} ({yt.UrlCanal})");
-                    Console.WriteLine($"   {yt.Descripcion}");
-                }
-
-                Console.WriteLine("🎬 Animes / Series favoritas:");
-                foreach (var anime in animes)
-                {
-                    Console.WriteLine($" - {anime.Titulo}");
-                    Console.WriteLine($"   {anime.Descripcion}");
-                    Console.WriteLine($"   Carátula: {anime.CaratulaUrl}");
-                    Console.WriteLine($"   Trailer: https://www.youtube.com/watch?v={anime.TrailerYoutubeId}");
-                }
+                var p = personaDTO.Datos;
+                Console.WriteLine($"👤 Persona principal: {p.Nombres} {p.Apellidos} (Nacido: {p.FechaNacimiento:dd/MM/yyyy})");
 
                 Console.WriteLine("👨‍👩‍👦 Genealogía:");
-                foreach (var fam in familiares)
-                {
+                foreach (var fam in personaDTO.Genealogia)
                     Console.WriteLine($" - {fam.Parentesco}: {fam.Nombre} (Foto: {fam.FotoUrl})");
-                }
 
                 Console.WriteLine("🗓️ Línea de tiempo:");
-                foreach (var ev in eventos)
-                {
+                foreach (var ev in personaDTO.Timeline)
                     Console.WriteLine($" - {ev.Fecha:dd/MM/yyyy}: {ev.Titulo} ({ev.Descripcion})");
-                }
 
                 Console.WriteLine("🌐 Redes sociales:");
-                foreach (var s in redes)
-                {
+                foreach (var s in personaDTO.RedesSociales)
                     Console.WriteLine($" - {s.RedSocial}: {s.Url}");
-                }
-
-
             }
             else
             {
-                Console.WriteLine("⚠️ No se encontró la persona principal en la BD.");
+                Console.WriteLine("⚠️ No se encontró la persona principal.");
             }
 
             logger.LogInformation("✅ Data2Web ejecutado correctamente.");

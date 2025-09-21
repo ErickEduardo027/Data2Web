@@ -49,6 +49,7 @@ internal class Program
                 services.AddScoped<IAnimeSerieService, AnimeSerieService>();
                 services.AddScoped<IGenealogiaService, GenealogiaService>();
                 services.AddScoped<ITimelineService, TimelineService>();
+                services.AddScoped<ISocialLinksService, SocialLinksService>();
 
 
 
@@ -83,6 +84,8 @@ internal class Program
             var eventos = await timelineRepo.GetByPersonaIdAsync(persona.PersonaId);
             var redes = await socialRepo.GetByPersonaIdAsync(persona.PersonaId);
 
+            var socialService = scope.ServiceProvider.GetRequiredService<ISocialLinksService>();
+            var redess = await socialService.GetByPersonaIdAsync(1); // cambia 1 por el Id real
 
             var personaService = scope.ServiceProvider.GetRequiredService<IPersonaService>();
             var personaDTO = await personaService.GetPersonaPrincipalAsync();
@@ -92,6 +95,12 @@ internal class Program
 
             if (personaDTO?.Datos != null)
             {
+                Console.WriteLine("🌐 Redes Sociales:");
+                foreach (var r in redess)
+                {
+                    Console.WriteLine($" - {r.Plataforma}: {r.Url}");
+                }
+
                 var p = personaDTO.Datos;
                 Console.WriteLine($"👤 Persona principal: {p.Nombres} {p.Apellidos} (Nacido: {p.FechaNacimiento:dd/MM/yyyy})");
 

@@ -15,7 +15,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        // 1. Crear Host con configuración y logging
+        //Host con configuración y logging
         var builder = Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(cfg =>
             {
@@ -28,12 +28,12 @@ internal class Program
             )
             .ConfigureServices((ctx, services) =>
             {
-                // 2. Registro de infraestructura
+                //Registro de infraestructura
                 services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
                 services.AddScoped<IDbConnection>(sp =>
                     sp.GetRequiredService<IDbConnectionFactory>().Create());
 
-                // 3. Repositorios
+                //Repositorios
                 services.AddScoped<IPersonaRepository, PersonaRepository>();
                 services.AddScoped<IPasatiempoRepository, PasatiempoRepository>();
                 services.AddScoped<IYouTuberRepository, YouTuberRepository>();
@@ -41,8 +41,13 @@ internal class Program
                 services.AddScoped<IGenealogiaRepository, GenealogiaRepository>();
                 services.AddScoped<ITimelineRepository, TimelineRepository>();
                 services.AddScoped<ISocialLinksRepository, SocialLinksRepository>();
+
+                //servicios
                 services.AddScoped<IPersonaService, PersonaService>();
                 services.AddScoped<IPasatiempoService, PasatiempoService>();
+                services.AddScoped<IYouTuberService, YouTuberService>();
+
+                //mas de la capa logica
                 services.AddHttpClient<ImageDownloader>();
 
 
@@ -76,6 +81,9 @@ internal class Program
             var personaService = scope.ServiceProvider.GetRequiredService<IPersonaService>();
             var personaDTO = await personaService.GetPersonaPrincipalAsync();
 
+            var ytService = scope.ServiceProvider.GetRequiredService<IYouTuberService>();
+            var youtuberss = await ytService.GetAllAsync();
+
             if (personaDTO?.Datos != null)
             {
                 var p = personaDTO.Datos;
@@ -92,6 +100,14 @@ internal class Program
                 Console.WriteLine("🌐 Redes sociales:");
                 foreach (var s in personaDTO.RedesSociales)
                     Console.WriteLine($" - {s.RedSocial}: {s.Url}");
+
+                Console.WriteLine("📺 YouTubers favoritos:");
+                foreach (var yt in youtuberss)
+                {
+                    Console.WriteLine($" - {yt.Nombre} ({yt.UrlCanal})");
+                    Console.WriteLine($"   {yt.Descripcion}");
+                    Console.WriteLine($"   Logo en: {yt.LogoPath}");
+                }
             }
             else
             {

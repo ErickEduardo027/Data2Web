@@ -83,9 +83,7 @@ internal class Program
             var jsonExp = scope.ServiceProvider.GetRequiredService<JsonExporter>();
             var pageGen = scope.ServiceProvider.GetRequiredService<PageGenerator>();
 
-            // ====================
             // Persona principal
-            // ====================
             var personaDTO = await personaService.GetPersonaPrincipalAsync();
             if (personaDTO?.Datos == null)
             {
@@ -100,9 +98,7 @@ internal class Program
                 Path.Combine(pagesDir, "sobre-mi.html")
             );
 
-            // ====================
             // Pasatiempos
-            // ====================
             var pasatiempos = await pasatiempoService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
             await jsonExp.ExportAsync(pasatiempos, Path.Combine(exportDir, "pasatiempos.json"));
             await pageGen.GenerateAsync(
@@ -111,9 +107,7 @@ internal class Program
                 Path.Combine(pagesDir, "pasatiempos.html")
             );
 
-            // ====================
             // YouTubers
-            // ====================
             var youtubers = await ytService.GetAllAsync();
             await jsonExp.ExportAsync(youtubers, Path.Combine(exportDir, "youtubers.json"));
             await pageGen.GenerateAsync(
@@ -122,9 +116,7 @@ internal class Program
                 Path.Combine(pagesDir, "youtubers.html")
             );
 
-            // ====================
             // AnimeSeries
-            // ====================
             var animes = await animeService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
             await jsonExp.ExportAsync(animes, Path.Combine(exportDir, "animeseries.json"));
             await pageGen.GenerateAsync(
@@ -133,9 +125,7 @@ internal class Program
                 Path.Combine(pagesDir, "animeseries.html")
             );
 
-            // ====================
             // Timeline
-            // ====================
             var timeline = await timelineService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
             await jsonExp.ExportAsync(timeline, Path.Combine(exportDir, "timeline.json"));
             await pageGen.GenerateAsync(
@@ -144,9 +134,7 @@ internal class Program
                 Path.Combine(pagesDir, "timeline.html")
             );
 
-            // ====================
             // Redes Sociales
-            // ====================
             var redes = await socialService.GetByPersonaIdAsync(personaDTO.Datos.PersonaId);
             await jsonExp.ExportAsync(redes, Path.Combine(exportDir, "sociallinks.json"));
             await pageGen.GenerateAsync(
@@ -155,25 +143,30 @@ internal class Program
                 Path.Combine(pagesDir, "sociallinks.html")
             );
 
-            // ====================
-            // Index (sin modelo complejo)
-            // ====================
+            // Index
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "Index.hbs"),
                 new { },
                 Path.Combine(pagesDir, "index.html")
             );
 
-            // ====================
-            // Contacto (estático)
-            // ====================
+            // Contacto
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "Contacto.hbs"),
                 new { },
                 Path.Combine(pagesDir, "contacto.html")
             );
 
-            Console.WriteLine("✅ Todos los JSON y HTML generados correctamente.");
+            // Copiar Assets
+            string assetsSource = Path.Combine(AppContext.BaseDirectory, "Assets");
+            string assetsDest = Path.Combine(pagesDir, "Assets");
+
+            if (Directory.Exists(assetsDest))
+                Directory.Delete(assetsDest, true);
+
+            CopyDirectory(assetsSource, assetsDest);
+
+            Console.WriteLine("✅ Todos los JSON, HTML y Assets copiados correctamente.");
             logger.LogInformation("🚀 Data2Web ejecutado correctamente.");
         }
         catch (Exception ex)
@@ -192,6 +185,22 @@ internal class Program
             Console.WriteLine($"❌ Error: {ex.Message} — Se generó error.html");
         }
     }
+
+    // Copiar directorios recursivamente (incluye CSS, JS, Img)
+    private static void CopyDirectory(string sourceDir, string destDir)
+    {
+        Directory.CreateDirectory(destDir);
+
+        foreach (string file in Directory.GetFiles(sourceDir))
+        {
+            string targetFile = Path.Combine(destDir, Path.GetFileName(file));
+            File.Copy(file, targetFile, true);
+        }
+
+        foreach (string dir in Directory.GetDirectories(sourceDir))
+        {
+            string targetSubDir = Path.Combine(destDir, Path.GetFileName(dir));
+            CopyDirectory(dir, targetSubDir);
+        }
+    }
 }
-
-

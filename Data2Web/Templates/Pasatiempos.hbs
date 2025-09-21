@@ -1,18 +1,12 @@
 {{#> _Layout title="Pasatiempos" active="pasatiempos"}}
-<h2>🎨 Mis Pasatiempos</h2>
-<div class="row">
-    {{#each this}}
-    <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-            <img src="../Assets/img/pasatiempos/{{ImagenUrl}}" class="card-img-top" alt="{{Titulo}}">
-            <div class="card-body">
-                <h5 class="card-title">{{Titulo}}</h5>
-                <p class="card-text">{{Descripcion}}</p>
-            </div>
-        </div>
+<h1 class="text-2xl font-bold mb-4">Mis Pasatiempos</h1>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {{#each Items}}
+    <div class="bg-gray-100 p-4 rounded shadow">
+        <h3 class="font-semibold">{{Nombre}}</h3>
+        <p>{{Descripcion}}</p>
+        <img src="{{ImagenUrl}}" alt="{{Nombre}}" class="mt-2 rounded">
     </div>
     {{/each}}
 </div>
 {{/_Layout}}
-
-

@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+// timeline.js
 document.addEventListener("DOMContentLoaded", () => {
-    const items = document.querySelectorAll(".timeline-item");
+    const items = document.querySelectorAll(".timeline li");
 
     items.forEach((item, index) => {
         item.style.opacity = 0;
@@ -18,5 +13,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }, index * 200);
     });
 });
-
-}

@@ -9,6 +9,9 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Assets\CSS\styles.css" />
+    <None Remove="Assets\JS\scripts.js" />
+    <None Remove="Assets\JS\timeline.js" />
     <None Remove="Templates\AnimeSeries.hbs" />
     <None Remove="Templates\Contacto.hbs" />
     <None Remove="Templates\Error.hbs" />
@@ -24,6 +27,15 @@
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\CSS\styles.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\JS\scripts.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\JS\timeline.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\AnimeSeries.hbs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

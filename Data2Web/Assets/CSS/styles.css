@@ -1,81 +1,37 @@
-/* 🎨 Estilos personalizados */
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
-}
+/* 🎨 Estilos personalizados Data2Web (para complementar Tailwind por CDN) */
 
-h1, h2, h3 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.container {
-    max-width: 960px;
-    margin: auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Navbar */
-.navbar .nav-link.active {
-    font-weight: bold;
-    color: #0d6efd !important;
-    text-decoration: underline;
-}
-
-/* Galerías */
-img {
-    border-radius: 6px;
-    margin: 10px 0;
-}
-
-/* Formularios */
-form {
-    max-width: 600px;
-    margin: auto;
-}
-
-    form div {
-        margin-bottom: 15px;
-    }
-
-    form input, form textarea {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    form button {
-        padding: 10px 20px;
-        border: none;
-        background: #0d6efd;
-        color: #fff;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-        form button:hover {
-            background: #0b5ed7;
-        }
-
-/* Timeline */
 .timeline li {
     position: relative;
-    padding-left: 20px;
-    border-left: 2px solid #0d6efd;
+    padding-left: 1.5rem; /* pl-6 */
+    border-left: 2px solid #2563eb; /* border-blue-600 */
 }
 
     .timeline li::before {
         content: "•";
         position: absolute;
-        left: -10px;
-        color: #0d6efd;
-        font-size: 20px;
+        left: -0.75rem;
         top: 0;
+        color: #2563eb; /* azul Tailwind */
+        font-size: 1.25rem;
+        font-weight: bold;
     }
 
+/* Navbar activo extra */
+.nav-link.active {
+    font-weight: bold;
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+/* Galerías */
+.gallery img {
+    width: 100%;
+    height: 12rem; /* h-48 */
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+    .gallery img:hover {
+        transform: scale(1.05);
+    }

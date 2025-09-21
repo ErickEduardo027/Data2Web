@@ -2,44 +2,41 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
 
-    <!-- ⚠️ Ruta a Bootstrap CSS -->
-    <!-- Debe apuntar a: /Assets/css/bootstrap.min.css -->
-    <link rel="stylesheet" href="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\CSS\bootstrap.min.css">
+    <!-- Tailwind vía CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- ⚠️ Ruta a tus estilos -->
-    <!-- Debe apuntar a: /Assets/css/styles.css -->
-    <link rel="stylesheet" href="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\CSS\styles.css">
+    <!-- Tus estilos personalizados (opcional, sobreescribe Tailwind si quieres) -->
+    <link href="./Assets/CSS/styles.css" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">🌐 Data2Web</a>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link {{#ifEquals active 'index'}}active{{/ifEquals}}" href="index.html">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link {{#ifEquals active 'sobre-mi'}}active{{/ifEquals}}" href="sobre-mi.html">Sobre mí</a></li>
-                <li class="nav-item"><a class="nav-link {{#ifEquals active 'pasatiempos'}}active{{/ifEquals}}" href="pasatiempos.html">Pasatiempos</a></li>
-                <li class="nav-item"><a class="nav-link {{#ifEquals active 'youtubers'}}active{{/ifEquals}}" href="youtubers.html">YouTubers</a></li>
-                <li class="nav-item"><a class="nav-link {{#ifEquals active 'animeseries'}}active{{/ifEquals}}" href="animeseries.html">Anime/Series</a></li>
-                <li class="nav-item"><a class="nav-link {{#ifEquals active 'contacto'}}active{{/ifEquals}}" href="contacto.html">Contacto</a></li>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 text-white shadow">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a class="text-xl font-bold" href="index.html">Data2Web</a>
+            <ul class="flex space-x-6">
+                <li><a class="{{#ifEquals active 'index'}}text-blue-400 font-bold{{/ifEquals}}" href="index.html">Inicio</a></li>
+                <li><a class="{{#ifEquals active 'sobre-mi'}}text-blue-400 font-bold{{/ifEquals}}" href="sobre-mi.html">Sobre mí</a></li>
+                <li><a class="{{#ifEquals active 'pasatiempos'}}text-blue-400 font-bold{{/ifEquals}}" href="pasatiempos.html">Pasatiempos</a></li>
+                <li><a class="{{#ifEquals active 'youtubers'}}text-blue-400 font-bold{{/ifEquals}}" href="youtubers.html">YouTubers</a></li>
+                <li><a class="{{#ifEquals active 'animeseries'}}text-blue-400 font-bold{{/ifEquals}}" href="animeseries.html">Anime/Series</a></li>
+                <li><a class="{{#ifEquals active 'timeline'}}text-blue-400 font-bold{{/ifEquals}}" href="timeline.html">Línea de tiempo</a></li>
+                <li><a class="{{#ifEquals active 'sociallinks'}}text-blue-400 font-bold{{/ifEquals}}" href="sociallinks.html">Redes Sociales</a></li>
+                <li><a class="{{#ifEquals active 'contacto'}}text-blue-400 font-bold{{/ifEquals}}" href="contacto.html">Contacto</a></li>
             </ul>
         </div>
     </nav>
 
-    <main class="container my-4">
+    <!-- Contenido dinámico -->
+    <main class="container mx-auto mt-6 bg-white shadow rounded p-6">
         {{{body}}}
     </main>
 
-    <!-- ⚠️ Ruta a tu JS -->
-    <!-- Debe apuntar a: /Assets/js/scripts.js -->
-    <script src="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\JS\scripts.js"></script>
-
-    <!-- ⚠️ Ruta a tu JS para timeline -->
-    <!-- Debe apuntar a: /Assets/js/timeline.js -->
-    <script src="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\JS\timeline.js"></script>
+    <!-- Scripts -->
+    <script src="./Assets/JS/scripts.js"></script>
+    <script src="./Assets/JS/timeline.js"></script>
 </body>
 </html>
-
 

@@ -1,16 +1,11 @@
 {{#> _Layout title="Redes Sociales" active="sociallinks"}}
-
-<h1>🌐 Redes Sociales</h1>
-<div class="d-flex flex-wrap gap-3 mt-3">
+<h1 class="text-2xl font-bold mb-6">🌐 Redes Sociales</h1>
+<div class="flex flex-wrap gap-6">
     {{#each Items}}
-    <a href="{{Url}}" target="_blank" class="btn btn-outline-dark d-flex align-items-center gap-2">
+    <a href="{{Url}}" target="_blank" class="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded shadow hover:bg-gray-200">
         {{{IconoSvg}}}
-        <span>{{RedSocial}}</span>
+        <span class="font-semibold">{{RedSocial}}</span>
     </a>
     {{/each}}
 </div>
-
 {{/_Layout}}
-
-
-

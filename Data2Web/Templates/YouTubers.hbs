@@ -1,23 +1,14 @@
-{{#> _Layout title="YouTubers" active="youtubers"}}
-<h2>📺 Mis YouTubers Favoritos</h2>
-<div class="row">
-    {{#each this}}
-    <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-            <img src="../Assets/img/youtubers/{{LogoPath}}" class="card-img-top" alt="{{Nombre}}">
-            <div class="card-body">
-                <h5 class="card-title">{{Nombre}}</h5>
-                <p class="card-text">{{Descripcion}}</p>
-                <a href="{{UrlCanal}}" target="_blank" class="btn btn-danger">Ir al canal</a>
-            </div>
+{{#> _Layout title="YouTubers Favoritos" active="youtubers"}}
+<h1 class="text-2xl font-bold mb-6">📺 YouTubers Favoritos</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {{#each Items}}
+    <div class="bg-gray-100 rounded shadow p-4 flex items-center space-x-4">
+        <img src="{{LogoPath}}" alt="{{Nombre}}" class="w-16 h-16 rounded-full">
+        <div>
+            <h3 class="font-semibold text-lg"><a href="{{UrlCanal}}" target="_blank" class="text-blue-600 hover:underline">{{Nombre}}</a></h3>
+            <p class="text-gray-600 text-sm">{{Descripcion}}</p>
         </div>
     </div>
     {{/each}}
 </div>
 {{/_Layout}}
-
-
-
-
-
-

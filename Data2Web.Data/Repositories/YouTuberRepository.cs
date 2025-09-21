@@ -6,14 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Data2Web.Data.Repositories.Interfaces;
 
 namespace Data2Web.Data.Repositories
 {
-    public interface IYouTuberRepository
-    {
-        Task<IEnumerable<YouTuber>> GetAllAsync();
-        Task<YouTuber?> GetByIdAsync(int id);
-    }
     public class YouTuberRepository : IYouTuberRepository
     {
         private readonly IDbConnectionFactory _factory;

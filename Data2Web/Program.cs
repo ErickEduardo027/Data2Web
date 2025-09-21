@@ -7,6 +7,7 @@ using Serilog;
 
 using Data2Web.Data.Context;
 using Data2Web.Data.Repositories;
+using Data2Web.Data.Repositories.Interfaces;
 
 internal class Program
 {

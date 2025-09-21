@@ -22,7 +22,6 @@
     <Folder Include="Assets\Imagenes\AnimeSeries\" />
     <Folder Include="Assets\Imagenes\Youtubers\" />
     <Folder Include="Assets\Imagenes\Pasatiempos\" />
-    <Folder Include="Pages\" />
   </ItemGroup>
 
   <ItemGroup>

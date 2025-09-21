@@ -46,6 +46,10 @@ internal class Program
                 services.AddScoped<IPersonaService, PersonaService>();
                 services.AddScoped<IPasatiempoService, PasatiempoService>();
                 services.AddScoped<IYouTuberService, YouTuberService>();
+                services.AddScoped<IAnimeSerieService, AnimeSerieService>();
+                services.AddScoped<IGenealogiaService, GenealogiaService>();
+
+
 
                 //mas de la capa logica
                 services.AddHttpClient<ImageDownloader>();
@@ -56,10 +60,11 @@ internal class Program
 
         var host = builder.Build();
 
-        // 4. Scope para probar que arranca bien
+        //Scope para probar que arranca bien
         using var scope = host.Services.CreateScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
+        //pruebas
         try
         {
             var personaRepo = scope.ServiceProvider.GetRequiredService<IPersonaRepository>();

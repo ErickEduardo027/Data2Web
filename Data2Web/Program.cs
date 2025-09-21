@@ -3,6 +3,7 @@ using Data2Web.Data.Repositories;
 using Data2Web.Data.Repositories.Interfaces;
 using Data2Web.Logic.Services;
 using Data2Web.Logic.Services.InterfacesDeServicios;
+using Data2Web.Logic.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,6 +42,9 @@ internal class Program
                 services.AddScoped<ITimelineRepository, TimelineRepository>();
                 services.AddScoped<ISocialLinksRepository, SocialLinksRepository>();
                 services.AddScoped<IPersonaService, PersonaService>();
+                services.AddScoped<IPasatiempoService, PasatiempoService>();
+                services.AddHttpClient<ImageDownloader>();
+
 
 
             });

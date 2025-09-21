@@ -1,6 +1,7 @@
 using Data2Web.Data.Context;
 using Data2Web.Data.Repositories;
 using Data2Web.Data.Repositories.Interfaces;
+using Data2Web.Logic.Generators;
 using Data2Web.Logic.Services;
 using Data2Web.Logic.Services.InterfacesDeServicios;
 using Data2Web.Logic.Utils;
@@ -51,12 +52,10 @@ internal class Program
                 services.AddScoped<ITimelineService, TimelineService>();
                 services.AddScoped<ISocialLinksService, SocialLinksService>();
 
-
-
                 //mas de la capa logica
                 services.AddHttpClient<ImageDownloader>();
-
-
+                services.AddSingleton<JsonExporter>();
+                services.AddSingleton<PageGenerator>();
 
             });
 

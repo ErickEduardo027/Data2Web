@@ -24,7 +24,7 @@ namespace Data2Web.Data.Repositories
         {
             using var conn = _factory.Create();
             string sql = @"
-                SELECT SocialLinkId, PersonaId, RedSocial, Url
+                SELECT SocialLinkId, PersonaId, RedSocial, Url, IconoSvg
                 FROM SocialLinks
                 WHERE PersonaId = @personaId";
             return await conn.QueryAsync<SocialLink>(sql, new { personaId });

@@ -28,7 +28,8 @@ namespace Data2Web.Logic.Services
                 PersonaId = s.PersonaId,
                 Plataforma = s.RedSocial,
                 Url = s.Url,
-                
+                IconoSvg = s.IconoSvg
+
             });
         }
     }

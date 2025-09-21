@@ -12,5 +12,6 @@ namespace Data2Web.Logic.DTOs
         public int PersonaId { get; set; }
         public string Plataforma { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+        public string IconoSvg { get; set; } = string.Empty;
     }
 }

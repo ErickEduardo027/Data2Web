@@ -10,7 +10,7 @@ namespace Data2Web.Data.Models
     {
         public int SocialLinkId { get; set; }
         public int PersonaId { get; set; }
-
+        public string IconoSvg { get; set; } = string.Empty; 
         public string RedSocial {  get; set; }
         public string Url { get; set; } = string.Empty;
        

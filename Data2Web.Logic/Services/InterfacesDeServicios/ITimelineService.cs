@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data2Web.Logic.Services.InterfacesDeServicios
 {
-    public interface IAnimeSerieService
+    public interface ITimelineService
     {
-        Task<IEnumerable<AnimeSerieDTO>> GetAllAsync();
+        Task<IEnumerable<TimelineEventoDTO>> GetByPersonaIdAsync(int personaId);
     }
 }

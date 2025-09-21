@@ -18,11 +18,11 @@ namespace Data2Web.Logic.Services
             _genealogiaRepo = genealogiaRepo;
         }
 
-        public async Task<IEnumerable<GenealogiaDto>> GetByPersonaIdAsync(int personaId)
+        public async Task<IEnumerable<GenealogiaDTO>> GetByPersonaIdAsync(int personaId)
         {
             var entities = await _genealogiaRepo.GetByPersonaIdAsync(personaId);
 
-            return entities.Select(g => new GenealogiaDto
+            return entities.Select(g => new GenealogiaDTO
             {
                 GenealogiaId = g.GenealogiaId,
                 PersonaId = g.PersonaId,

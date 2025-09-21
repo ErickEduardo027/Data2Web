@@ -9,6 +9,6 @@ namespace Data2Web.Logic.Services.InterfacesDeServicios
 {
     public interface IGenealogiaService
     {
-        Task<IEnumerable<GenealogiaDto>> GetByPersonaIdAsync(int personaId);
+        Task<IEnumerable<GenealogiaDTO>> GetByPersonaIdAsync(int personaId);
     }
 }

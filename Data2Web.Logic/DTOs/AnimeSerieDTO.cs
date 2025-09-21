@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data2Web.Logic.DTOs
 {
-    public class AnimeSerieDto
+    public class AnimeSerieDTO
     {
         public int AnimeSerieId { get; set; }
         public string Titulo { get; set; } = string.Empty;

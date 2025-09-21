@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data2Web.Logic.DTOs
 {
-    public class GenealogiaDto
+    public class GenealogiaDTO
     {
         public int GenealogiaId { get; set; }
         public int PersonaId { get; set; }

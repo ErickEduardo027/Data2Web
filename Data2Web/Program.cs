@@ -48,6 +48,7 @@ internal class Program
                 services.AddScoped<IYouTuberService, YouTuberService>();
                 services.AddScoped<IAnimeSerieService, AnimeSerieService>();
                 services.AddScoped<IGenealogiaService, GenealogiaService>();
+                services.AddScoped<ITimelineService, TimelineService>();
 
 
 

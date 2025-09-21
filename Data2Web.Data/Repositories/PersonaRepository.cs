@@ -2,16 +2,10 @@ using Dapper;
 using Data2Web.Data.Models;
 using Data2Web.Data.Context;
 using System.Data;
+using Data2Web.Data.Repositories.Interfaces;
 
 namespace Data2Web.Data.Repositories
 {
-
-    public interface IPersonaRepository
-    {
-        Task<Persona?> GetPrincipalAsync();
-        Task<IEnumerable<Persona>> GetAllAsync();
-        Task<Persona?> GetByIdAsync(int id);
-    }
   
 
     public class PersonaRepository : IPersonaRepository

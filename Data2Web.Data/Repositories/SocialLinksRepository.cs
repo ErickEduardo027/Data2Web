@@ -1,6 +1,7 @@
 using Dapper;
 using Data2Web.Data.Context;
 using Data2Web.Data.Models;
+using Data2Web.Data.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,6 @@ using System.Threading.Tasks;
 
 namespace Data2Web.Data.Repositories
 {
-    public interface ISocialLinksRepository
-    {
-        Task<IEnumerable<SocialLink>> GetByPersonaIdAsync(int personaId);
-    }
 
     public class SocialLinksRepository : ISocialLinksRepository
     {

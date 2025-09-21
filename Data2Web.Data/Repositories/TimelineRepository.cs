@@ -6,13 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Data2Web.Data.Repositories.Interfaces;
 
 namespace Data2Web.Data.Repositories
 {
-    public interface ITimelineRepository
-    {
-        Task<IEnumerable<TimelineEvento>> GetByPersonaIdAsync(int personaId);
-    }
 
     public class TimelineRepository : ITimelineRepository
     {

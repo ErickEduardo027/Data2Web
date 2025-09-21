@@ -6,14 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Data2Web.Data.Repositories.Interfaces;
 
 namespace Data2Web.Data.Repositories
 {
-    public interface IAnimeSerieRepository
-    {
-        Task<IEnumerable<AnimeSerie>> GetByPersonaIdAsync(int personaId);
-        Task<IEnumerable<AnimeSerie>> GetAllAsync();
-    }
 
     public class AnimeSerieRepository : IAnimeSerieRepository
     {

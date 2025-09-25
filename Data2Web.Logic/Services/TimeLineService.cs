@@ -33,7 +33,8 @@ namespace Data2Web.Logic.Services
                 {
                     TimelineEventoId = evento.EventoId,
                     PersonaId = evento.PersonaId,
-                    Fecha = evento.Fecha,
+                    // 👇 Aquí lo formateamos
+                    Fecha = evento.Fecha.ToString("dd/MM/yyyy"),
                     Titulo = evento.Titulo,
                     Descripcion = evento.Descripcion,
                     Imagenes = imagenes.ToList()
@@ -44,4 +45,3 @@ namespace Data2Web.Logic.Services
         }
     }
 }
-

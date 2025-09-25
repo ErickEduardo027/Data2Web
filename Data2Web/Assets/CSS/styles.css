@@ -24,6 +24,13 @@
     text-decoration: underline;
 }
 
+.nav-link.active {
+    font-weight: bold;
+    color: #2563eb; /* azul Tailwind */
+    border-bottom: 2px solid #2563eb;
+}
+
+
 /* Galerías de imágenes */
 .gallery img {
     width: 100%; /* w-full */

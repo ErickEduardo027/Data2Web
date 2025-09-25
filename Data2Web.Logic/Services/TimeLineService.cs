@@ -1,10 +1,9 @@
+using Data2Web.Data.Models;
 using Data2Web.Data.Repositories.Interfaces;
 using Data2Web.Logic.DTOs;
 using Data2Web.Logic.Services.InterfacesDeServicios;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data2Web.Logic.Services
@@ -18,17 +17,31 @@ namespace Data2Web.Logic.Services
             _timelineRepo = timelineRepo;
         }
 
+        // 🔹 Devuelve DTOs ya con imágenes incluidas
         public async Task<IEnumerable<TimelineEventoDTO>> GetByPersonaIdAsync(int personaId)
         {
-            var entities = await _timelineRepo.GetByPersonaIdAsync(personaId);
+            var eventos = await _timelineRepo.GetByPersonaIdAsync(personaId);
 
-            return entities.Select(t => new TimelineEventoDTO
+            var lista = new List<TimelineEventoDTO>();
+
+            foreach (var evento in eventos)
             {
-                TimelineEventoId = t.EventoId,
-                PersonaId = t.PersonaId,
-                Fecha = t.Fecha,
-                Descripcion = t.Descripcion
-            });
+                // Traemos las imágenes desde el repo
+                var imagenes = await _timelineRepo.GetImagenesByEventoIdAsync(evento.EventoId);
+
+                lista.Add(new TimelineEventoDTO
+                {
+                    TimelineEventoId = evento.EventoId,
+                    PersonaId = evento.PersonaId,
+                    Fecha = evento.Fecha,
+                    Titulo = evento.Titulo,
+                    Descripcion = evento.Descripcion,
+                    Imagenes = imagenes.ToList()
+                });
+            }
+
+            return lista;
         }
     }
 }
+

@@ -72,6 +72,14 @@
   <ItemGroup>
     <Folder Include="Assets\Imagenes\Genealogia\" />
     <Folder Include="Assets\Imagenes\AnimeSeries\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento3\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento4\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento5\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento6\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento7\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento8\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento9\" />
+    <Folder Include="Assets\Imagenes\Timeline\Evento10\" />
     <Folder Include="Assets\Imagenes\Youtubers\" />
     <Folder Include="Assets\Imagenes\Pasatiempos\" />
   </ItemGroup>

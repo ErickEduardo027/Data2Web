@@ -27,6 +27,13 @@ namespace Data2Web.Logic.Generators
                 }
             });
 
+            _handlebars.RegisterHelper("json", (writer, context, parameters) =>
+            {
+                var value = parameters[0];
+                string json = System.Text.Json.JsonSerializer.Serialize(value);
+                writer.WriteSafeString(json);
+            });
+
             // 🔹 Cargar el layout
             string layoutPath = Path.Combine(AppContext.BaseDirectory, "Templates", "_Layout.hbs");
             if (File.Exists(layoutPath))

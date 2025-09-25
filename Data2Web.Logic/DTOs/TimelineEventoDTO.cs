@@ -11,6 +11,10 @@ namespace Data2Web.Logic.DTOs
         public int TimelineEventoId { get; set; }
         public int PersonaId { get; set; }
         public DateTime Fecha { get; set; }
-        public string Descripcion { get; set; } = string.Empty;
+        public string Titulo { get; set; } = string.Empty;
+        public string? Descripcion { get; set; }
+
+        // 🔹 Lista de imágenes asociadas al evento
+        public List<string> Imagenes { get; set; } = new();
     }
 }

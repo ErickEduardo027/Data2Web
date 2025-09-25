@@ -1,14 +1,50 @@
-<section class="max-w-3xl mx-auto">
-    <h2 class="text-3xl font-bold mb-8">Línea de tiempo 🕒</h2>
-    <ul class="timeline space-y-6">
-        {{#each Items}}
-        <li>
-            <div class="ml-4">
-                <p class="font-semibold text-blue-600">{{Fecha}}</p>
-                <h3 class="text-xl font-bold">{{Titulo}}</h3>
-                <p class="text-gray-700">{{Descripcion}}</p>
-            </div>
-        </li>
-        {{/each}}
-    </ul>
+
+
+<section class="py-8">
+    <h2 class="text-2xl font-bold mb-6 flex items-center">
+        Línea de tiempo
+        <span class="ml-2">⏰</span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Columna izquierda: eventos -->
+        <div>
+            <ul class="timeline space-y-6">
+                {{#each Items}}
+                <li>
+                    <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+                        <!-- Fecha -->
+                        <p class="text-blue-600 font-semibold">
+                            {{Fecha}}
+                        </p>
+                        <!-- Título -->
+                        <h3 class="text-lg font-bold text-gray-900">
+                            {{Titulo}}
+                        </h3>
+                        <!-- Descripción -->
+                        <p class="text-gray-600 text-sm">
+                            {{Descripcion}}
+                        </p>
+                        <!-- Botón -->
+                        <button class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                                onclick="mostrarImagenes({{EventoId}})">
+                            Ver imágenes
+                        </button>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <!-- Columna derecha: galería -->
+        <div id="galeria" class="bg-white shadow-md rounded-lg p-6 flex flex-col justify-center items-center text-gray-600">
+            Selecciona un evento para ver sus imágenes.
+        </div>
+    </div>
 </section>
+
+<!-- 👇 Exportamos los eventos con imágenes al JS -->
+<script>
+    window.timelineEventos = {{{json Items}}};
+</script>
+

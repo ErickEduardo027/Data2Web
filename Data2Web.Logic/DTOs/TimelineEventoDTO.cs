@@ -10,7 +10,7 @@ namespace Data2Web.Logic.DTOs
     {
         public int TimelineEventoId { get; set; }
         public int PersonaId { get; set; }
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
         public string Titulo { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
 

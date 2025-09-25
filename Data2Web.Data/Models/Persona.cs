@@ -11,7 +11,7 @@ namespace Data2Web.Data.Models
         public int PersonaId { get; set; }
         public string Nombres { get; set; } = string.Empty;
         public string Apellidos { get; set; } = string.Empty;
-        public DateTime FechaNacimiento { get; set; }
+        public string FechaNacimiento { get; set; }
         public bool EsPrincipal { get; set; }
     }
 }

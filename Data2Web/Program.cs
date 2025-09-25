@@ -154,10 +154,10 @@ internal class Program
 
             // Contacto
             await pageGen.GenerateAsync(
-                 Path.Combine(AppContext.BaseDirectory, "Templates", "Contacto.hbs"),
-                 new { active = "contacto" },
-                 Path.Combine(pagesDir, "contacto.html")
-             );
+                Path.Combine(AppContext.BaseDirectory, "Templates", "Contacto.hbs"),
+                new { active = "contacto" },
+                Path.Combine(pagesDir, "contacto.html")
+            );
 
             // Copiar carpeta Assets
             string assetsSource = Path.Combine(AppContext.BaseDirectory, "Assets");

@@ -1,24 +1,22 @@
-{{#> _Layout title="Sobre mí" active="sobre-mi"}}
+<section class="max-w-4xl mx-auto">
+    <div class="bg-white shadow-lg rounded-2xl p-8 mb-10">
+        <h2 class="text-3xl font-bold mb-4">Sobre mí</h2>
+        <p class="text-gray-700 mb-6">
+            Hola, soy <span class="font-semibold">{{Datos.Nombres}} {{Datos.Apellidos}}</span>.
+            Nací el <span class="font-medium">{{Datos.FechaNacimiento}}</span>.
+        </p>
 
-<h1 class="text-2xl font-bold mb-6">Sobre mí</h1>
-
-<div class="bg-white shadow p-6 rounded-lg">
-    <p><strong>Nombre:</strong> {{Datos.Nombres}} {{Datos.Apellidos}}</p>
-    <p><strong>Fecha de nacimiento:</strong> {{Datos.FechaNacimiento}}</p>
-</div>
-
-<h2 class="text-xl font-semibold mt-8 mb-4">Genealogía</h2>
-<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-    {{#each Genealogia}}
-    <div class="bg-white shadow p-4 rounded-lg text-center">
-        <p class="font-bold">{{Nombre}}</p>
-        <p class="text-gray-500">{{Parentesco}}</p>
-        {{#if FotoUrl}}
-        <img src="{{FotoUrl}}" alt="{{Nombre}}" class="rounded-lg mt-2 mx-auto h-32 object-cover">
-        {{/if}}
+        <h3 class="text-2xl font-semibold mb-4">👨‍👩‍👧‍👦 Mi familia</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {{#each Genealogia}}
+            <div class="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg shadow">
+                <img src="{{FotoUrl}}" alt="{{Nombre}}" class="w-16 h-16 rounded-full object-cover">
+                <div>
+                    <p class="font-semibold text-lg">{{Nombre}}</p>
+                    <p class="text-sm text-gray-600">{{Parentesco}}</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
     </div>
-    {{/each}}
-</div>
-
-{{/_Layout}}
-
+</section>

@@ -1,21 +1,12 @@
-{{#> _Layout title="Anime y Series" active="animeseries"}}
-
-<h1 class="text-2xl font-bold mb-6">Anime y Series Favoritas</h1>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {{#each Items}}
-    <div class="bg-white p-4 rounded-lg shadow">
-        <h2 class="font-semibold text-lg">{{Titulo}}</h2>
-        <p class="text-gray-600">{{Descripcion}}</p>
-        {{#if CaratulaUrl}}
-        <img src="{{CaratulaUrl}}" alt="{{Titulo}}" class="rounded-lg mt-2 h-48 object-cover">
-        {{/if}}
-        {{#if TrailerYoutubeId}}
-        <iframe class="mt-4 w-full h-64" src="https://www.youtube.com/embed/{{TrailerYoutubeId}}" frameborder="0" allowfullscreen></iframe>
-        {{/if}}
-    </div>
-    {{/each}}
-</div>
-
-{{/_Layout}}
+<section class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+    <h2 class="text-3xl font-bold mb-6">📩 Contáctame</h2>
+    <form action="#" method="post" class="space-y-4">
+        <input type="text" name="nombre" placeholder="Tu nombre" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300">
+        <input type="email" name="email" placeholder="Tu correo" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300">
+        <textarea name="mensaje" rows="5" placeholder="Tu mensaje" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"></textarea>
+        <button type="submit" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">
+            Enviar mensaje
+        </button>
+    </form>
+</section>
 

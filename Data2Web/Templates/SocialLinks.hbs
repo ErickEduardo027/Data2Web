@@ -1,16 +1,19 @@
-{{#> _Layout title="Redes Sociales" active="sociallinks"}}
+<section class="text-center">
+    <h2 class="text-3xl font-bold mb-8">Conéctate conmigo 🌐</h2>
 
-<h1 class="text-2xl font-bold mb-6">Mis Redes Sociales</h1>
+    <div class="grid gap-6 md:grid-cols-3">
+        {{#each Items}}
+        <a href="{{Url}}" target="_blank" class="group bg-white shadow-md rounded-xl p-6 flex flex-col items-center hover:shadow-xl transition">
 
-<div class="flex flex-wrap gap-6">
-    {{#each Items}}
-    <a href="{{Url}}" target="_blank" class="flex items-center space-x-2 text-blue-600 hover:underline">
-        {{{IconoSvg}}}
-        <span>{{RedSocial}}</span>
-    </a>
-    {{/each}}
-</div>
+            <!-- Icono SVG dinámico -->
+            <div class="text-blue-600 mb-3 w-3 h-3">
+                {{{IconoSvg}}}
+            </div>
 
-{{/_Layout}}
-
+            <h3 class="text-lg font-semibold mb-1">{{RedSocial}}</h3>
+            <p class="text-sm text-gray-500 break-all">{{Url}}</p>
+        </a>
+        {{/each}}
+    </div>
+</section>
 

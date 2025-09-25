@@ -8,6 +8,7 @@ namespace Data2Web.Logic.Generators
     public class PageGenerator
     {
         private readonly IHandlebars _handlebars;
+        private string? _layoutContent;
 
         public PageGenerator()
         {
@@ -26,31 +27,46 @@ namespace Data2Web.Logic.Generators
                 }
             });
 
-            // 🔹 Registrar partial _Layout (lo cargamos desde Templates)
+            // 🔹 Cargar el layout
             string layoutPath = Path.Combine(AppContext.BaseDirectory, "Templates", "_Layout.hbs");
             if (File.Exists(layoutPath))
             {
-                string layoutContent = File.ReadAllText(layoutPath);
-                _handlebars.RegisterTemplate("_Layout", layoutContent);
+                _layoutContent = File.ReadAllText(layoutPath);
             }
         }
 
         public async Task GenerateAsync<T>(string templatePath, T model, string outputPath)
         {
-            // Leer plantilla
+            // Leer contenido del template específico
             string templateContent = await File.ReadAllTextAsync(templatePath);
 
-            // Compilar plantilla
+            // Compilar y renderizar el contenido de la página
             var template = _handlebars.Compile(templateContent);
+            string bodyContent = template(model);
 
-            // Renderizar con modelo
-            string result = template(model);
+            string finalHtml;
+
+            // Si tenemos layout, lo envolvemos
+            if (!string.IsNullOrEmpty(_layoutContent))
+            {
+                var layoutTemplate = _handlebars.Compile(_layoutContent);
+
+                finalHtml = layoutTemplate(new
+                {
+                    title = Path.GetFileNameWithoutExtension(templatePath),
+                    active = Path.GetFileNameWithoutExtension(outputPath)?.ToLower(),
+                    body = bodyContent
+                });
+            }
+            else
+            {
+                // Sin layout → devolvemos solo el contenido
+                finalHtml = bodyContent;
+            }
 
             // Guardar archivo HTML
             Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-            await File.WriteAllTextAsync(outputPath, result);
+            await File.WriteAllTextAsync(outputPath, finalHtml);
         }
     }
 }
-
-

@@ -1,15 +1,14 @@
-{{#> _Layout title="Línea de tiempo" active="timeline"}}
-
-<h1 class="text-2xl font-bold mb-6">Mi Línea de Tiempo</h1>
-
-<ul class="timeline space-y-4">
-    {{#each Items}}
-    <li>
-        <p class="font-semibold">{{Fecha}} — {{Titulo}}</p>
-        <p class="text-gray-600">{{Descripcion}}</p>
-    </li>
-    {{/each}}
-</ul>
-
-{{/_Layout}}
-
+<section class="max-w-3xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8">Línea de tiempo 🕒</h2>
+    <ul class="timeline space-y-6">
+        {{#each Items}}
+        <li>
+            <div class="ml-4">
+                <p class="font-semibold text-blue-600">{{Fecha}}</p>
+                <h3 class="text-xl font-bold">{{Titulo}}</h3>
+                <p class="text-gray-700">{{Descripcion}}</p>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</section>

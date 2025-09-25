@@ -11,6 +11,7 @@ namespace Data2Web.Logic.Services
 {
     public class AnimeSerieService : IAnimeSerieService
     {
+
         private readonly IAnimeSerieRepository _repo;
 
         public AnimeSerieService(IAnimeSerieRepository repo)

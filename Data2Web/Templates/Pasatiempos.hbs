@@ -1,12 +1,18 @@
 {{#> _Layout title="Pasatiempos" active="pasatiempos"}}
-<h1 class="text-2xl font-bold mb-4">Mis Pasatiempos</h1>
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+<h1 class="text-2xl font-bold mb-6">Mis Pasatiempos</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gallery">
     {{#each Items}}
-    <div class="bg-gray-100 p-4 rounded shadow">
-        <h3 class="font-semibold">{{Nombre}}</h3>
-        <p>{{Descripcion}}</p>
-        <img src="{{ImagenUrl}}" alt="{{Nombre}}" class="mt-2 rounded">
+    <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="text-lg font-semibold">{{Titulo}}</h2>
+        <p class="text-gray-600">{{Descripcion}}</p>
+        {{#if ImagenUrl}}
+        <img src="{{ImagenUrl}}" alt="{{Titulo}}">
+        {{/if}}
     </div>
     {{/each}}
 </div>
+
 {{/_Layout}}
+

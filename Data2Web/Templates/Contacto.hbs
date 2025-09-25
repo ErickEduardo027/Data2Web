@@ -1,18 +1,21 @@
-{{#> _Layout title="Contacto" active="contacto"}}
-<h1 class="text-2xl font-bold mb-6">📩 Formulario de Contacto</h1>
-<form id="contactForm" class="space-y-4">
-    <div>
-        <label for="nombre" class="block font-medium">Nombre</label>
-        <input type="text" id="nombre" name="nombre" class="w-full border rounded px-3 py-2">
+{{#> _Layout title="Anime y Series" active="animeseries"}}
+
+<h1 class="text-2xl font-bold mb-6">Anime y Series Favoritas</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {{#each Items}}
+    <div class="bg-white p-4 rounded-lg shadow">
+        <h2 class="font-semibold text-lg">{{Titulo}}</h2>
+        <p class="text-gray-600">{{Descripcion}}</p>
+        {{#if CaratulaUrl}}
+        <img src="{{CaratulaUrl}}" alt="{{Titulo}}" class="rounded-lg mt-2 h-48 object-cover">
+        {{/if}}
+        {{#if TrailerYoutubeId}}
+        <iframe class="mt-4 w-full h-64" src="https://www.youtube.com/embed/{{TrailerYoutubeId}}" frameborder="0" allowfullscreen></iframe>
+        {{/if}}
     </div>
-    <div>
-        <label for="email" class="block font-medium">Correo electrónico</label>
-        <input type="email" id="email" name="email" class="w-full border rounded px-3 py-2">
-    </div>
-    <div>
-        <label for="mensaje" class="block font-medium">Mensaje</label>
-        <textarea id="mensaje" name="mensaje" rows="4" class="w-full border rounded px-3 py-2"></textarea>
-    </div>
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Enviar</button>
-</form>
+    {{/each}}
+</div>
+
 {{/_Layout}}
+

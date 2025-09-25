@@ -1,4 +1,5 @@
 using Data2Web.Data.Context;
+using Data2Web.Data.Models;
 using Data2Web.Data.Repositories;
 using Data2Web.Data.Repositories.Interfaces;
 using Data2Web.Logic.DTOs;
@@ -77,6 +78,7 @@ internal class Program
             var pasatiempoService = scope.ServiceProvider.GetRequiredService<IPasatiempoService>();
             var ytService = scope.ServiceProvider.GetRequiredService<IYouTuberService>();
             var animeService = scope.ServiceProvider.GetRequiredService<IAnimeSerieService>();
+            var genealogiaRepo = scope.ServiceProvider.GetRequiredService<IGenealogiaRepository>();
             var timelineService = scope.ServiceProvider.GetRequiredService<ITimelineService>();
             var socialService = scope.ServiceProvider.GetRequiredService<ISocialLinksService>();
 
@@ -94,7 +96,7 @@ internal class Program
             await jsonExp.ExportAsync(new[] { personaDTO }, Path.Combine(exportDir, "persona.json"));
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "SobreMi.hbs"),
-                personaDTO,
+                new { active = "sobre-mi", Datos = personaDTO.Datos, Genealogia = await genealogiaRepo.GetByPersonaIdAsync(personaDTO.Datos.PersonaId) },
                 Path.Combine(pagesDir, "sobre-mi.html")
             );
 
@@ -103,7 +105,7 @@ internal class Program
             await jsonExp.ExportAsync(pasatiempos, Path.Combine(exportDir, "pasatiempos.json"));
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "Pasatiempos.hbs"),
-                new { Items = pasatiempos },
+                new { active = "pasatiempos", Items = pasatiempos },
                 Path.Combine(pagesDir, "pasatiempos.html")
             );
 
@@ -112,7 +114,7 @@ internal class Program
             await jsonExp.ExportAsync(youtubers, Path.Combine(exportDir, "youtubers.json"));
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "YouTubers.hbs"),
-                new { Items = youtubers },
+                new { active = "youtubers", Items = youtubers },
                 Path.Combine(pagesDir, "youtubers.html")
             );
 
@@ -121,7 +123,7 @@ internal class Program
             await jsonExp.ExportAsync(animes, Path.Combine(exportDir, "animeseries.json"));
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "AnimeSeries.hbs"),
-                new { Items = animes },
+                new { active = "animeseries", Items = animes },
                 Path.Combine(pagesDir, "animeseries.html")
             );
 
@@ -130,7 +132,7 @@ internal class Program
             await jsonExp.ExportAsync(timeline, Path.Combine(exportDir, "timeline.json"));
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "Timeline.hbs"),
-                new { Items = timeline },
+                new { active = "timeline", Items = timeline },
                 Path.Combine(pagesDir, "timeline.html")
             );
 
@@ -139,25 +141,25 @@ internal class Program
             await jsonExp.ExportAsync(redes, Path.Combine(exportDir, "sociallinks.json"));
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "SocialLinks.hbs"),
-                new { Items = redes },
+                new { active = "sociallinks", Items = redes },
                 Path.Combine(pagesDir, "sociallinks.html")
             );
 
             // Index
             await pageGen.GenerateAsync(
                 Path.Combine(AppContext.BaseDirectory, "Templates", "Index.hbs"),
-                new { },
+                new { active = "index" },
                 Path.Combine(pagesDir, "index.html")
             );
 
             // Contacto
             await pageGen.GenerateAsync(
-                Path.Combine(AppContext.BaseDirectory, "Templates", "Contacto.hbs"),
-                new { },
-                Path.Combine(pagesDir, "contacto.html")
-            );
+                 Path.Combine(AppContext.BaseDirectory, "Templates", "Contacto.hbs"),
+                 new { active = "contacto" },
+                 Path.Combine(pagesDir, "contacto.html")
+             );
 
-            // Copiar Assets
+            // Copiar carpeta Assets
             string assetsSource = Path.Combine(AppContext.BaseDirectory, "Assets");
             string assetsDest = Path.Combine(pagesDir, "Assets");
 
@@ -186,7 +188,6 @@ internal class Program
         }
     }
 
-    // Copiar directorios recursivamente (incluye CSS, JS, Img)
     private static void CopyDirectory(string sourceDir, string destDir)
     {
         Directory.CreateDirectory(destDir);

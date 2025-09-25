@@ -1,11 +1,15 @@
-{{#> _Layout title="Línea de Tiempo" active="timeline"}}
-<h1 class="text-2xl font-bold mb-6">🗓️ Línea de Tiempo</h1>
+{{#> _Layout title="Línea de tiempo" active="timeline"}}
+
+<h1 class="text-2xl font-bold mb-6">Mi Línea de Tiempo</h1>
+
 <ul class="timeline space-y-4">
     {{#each Items}}
-    <li class="timeline-item bg-gray-50 p-4 rounded shadow">
-        <span class="text-blue-600 font-bold">{{Fecha}}</span> —
-        <strong>{{Titulo}}</strong>: {{Descripcion}}
+    <li>
+        <p class="font-semibold">{{Fecha}} — {{Titulo}}</p>
+        <p class="text-gray-600">{{Descripcion}}</p>
     </li>
     {{/each}}
 </ul>
+
 {{/_Layout}}
+

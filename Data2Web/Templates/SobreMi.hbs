@@ -1,21 +1,24 @@
 {{#> _Layout title="Sobre mí" active="sobre-mi"}}
-<h1 class="text-2xl font-bold mb-4">Sobre mí</h1>
-<p class="text-gray-600">
-    Hola, mi nombre es {{Datos.Nombres}} {{Datos.Apellidos}}, nacido el
-    {{Datos.FechaNacimiento}}.
-</p>
 
-<h2 class="text-xl font-semibold mt-6 mb-2">👨‍👩‍👦 Genealogía</h2>
-<ul class="list-disc pl-6">
+<h1 class="text-2xl font-bold mb-6">Sobre mí</h1>
+
+<div class="bg-white shadow p-6 rounded-lg">
+    <p><strong>Nombre:</strong> {{Datos.Nombres}} {{Datos.Apellidos}}</p>
+    <p><strong>Fecha de nacimiento:</strong> {{Datos.FechaNacimiento}}</p>
+</div>
+
+<h2 class="text-xl font-semibold mt-8 mb-4">Genealogía</h2>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
     {{#each Genealogia}}
-    <li>{{Parentesco}}: {{Nombre}} <img src="{{FotoUrl}}" alt="{{Nombre}}" class="inline w-10 h-10 rounded-full ml-2"></li>
+    <div class="bg-white shadow p-4 rounded-lg text-center">
+        <p class="font-bold">{{Nombre}}</p>
+        <p class="text-gray-500">{{Parentesco}}</p>
+        {{#if FotoUrl}}
+        <img src="{{FotoUrl}}" alt="{{Nombre}}" class="rounded-lg mt-2 mx-auto h-32 object-cover">
+        {{/if}}
+    </div>
     {{/each}}
-</ul>
+</div>
 
-<h2 class="text-xl font-semibold mt-6 mb-2">📅 Línea de Tiempo</h2>
-<ul class="timeline">
-    {{#each Timeline}}
-    <li class="timeline-item">{{Fecha}} - <strong>{{Titulo}}</strong>: {{Descripcion}}</li>
-    {{/each}}
-</ul>
 {{/_Layout}}
+

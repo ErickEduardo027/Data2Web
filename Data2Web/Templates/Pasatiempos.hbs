@@ -1,14 +1,37 @@
-<section class="max-w-5xl mx-auto">
-    <h2 class="text-3xl font-bold mb-6">Mis pasatiempos 🎨</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 gallery">
-        {{#each Items}}
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-            <img src="{{ImagenUrl}}" alt="{{Titulo}}" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="font-bold text-lg mb-2">{{Titulo}}</h3>
-                <p class="text-gray-600 text-sm">{{Descripcion}}</p>
-            </div>
+<section class="py-8">
+    <h2 class="text-2xl font-bold mb-6">Mis Pasatiempos 🎨</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Pasatiempo 1 -->
+        <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+            <img src="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\Imagenes\Pasatiempos\photo-1542038784456-1ea8e935640e.jpeg" alt="Pasatiempo 1"
+                 class="w-full h-48 object-cover rounded mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Fotografia</h3>
+            <p class="text-gray-600 text-sm">
+                "Capturar momentos únicos con mi cámara me permite congelar recuerdos y contar historias a través de imágenes. Cada fotografía es una forma de expresión y una oportunidad para ver el mundo desde otra perspectiva."
+            </p>
         </div>
-        {{/each}}
+
+        <!-- Pasatiempo 2 -->
+        <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+            <img src="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\Imagenes\Pasatiempos\download.jpg" alt="Programacion"
+                 class="w-full h-48 object-cover rounded mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Pasatiempo 2</h3>
+            <p class="text-gray-600 text-sm">
+                "La programación es mi manera de construir ideas y transformarlas en soluciones reales. Disfruto el reto de resolver problemas, crear proyectos y aprender nuevas tecnologías que me permiten crecer cada día."
+            </p>
+        </div>
+
+        <!-- Pasatiempo 3 -->
+        <div class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+            <img src="C:\Users\Erick Eduardo\Desktop\Lenguajes de programacion\tecnologias del internet 2\Data2Web\Data2Web\Assets\Imagenes\Pasatiempos\Baseball-Metrics-1.jpg" alt="Baseball"
+                 class="w-full h-48 object-cover rounded mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Pasatiempo 3</h3>
+            <p class="text-gray-600 text-sm">
+                "El béisbol es más que un deporte, es pasión y trabajo en equipo. Cada partido me enseña disciplina, estrategia y me recuerda lo emocionante que es luchar por cada jugada."
+            </p>
+        </div>
+
     </div>
 </section>
+

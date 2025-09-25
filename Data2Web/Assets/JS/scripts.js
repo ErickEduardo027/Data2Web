@@ -1,37 +1,50 @@
-// scripts.js
 document.addEventListener("DOMContentLoaded", () => {
-    // Highlight de navbar según página actual
-    const links = document.querySelectorAll(".nav-link");
-    const currentPage = window.location.pathname.split("/").pop();
-    links.forEach(link => {
-        if (link.getAttribute("href") === currentPage) {
-            link.classList.add("active"); // Tailwind extra en styles.css
+    const form = document.getElementById("contactForm");
+    const nombre = document.getElementById("nombre");
+    const correo = document.getElementById("correo");
+    const mensaje = document.getElementById("mensaje");
+    const formMessage = document.getElementById("formMessage");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        formMessage.innerHTML = "";
+        formMessage.className = "mt-4 text-center font-semibold";
+
+        let errores = [];
+
+        if (!nombre.value.trim()) {
+            errores.push("⚠️ El nombre no se puede enviar vacío");
         }
+        if (!correo.value.trim()) {
+            errores.push("⚠️ El correo electrónico no se puede enviar vacío");
+        } else if (!validarCorreo(correo.value)) {
+            errores.push("⚠️ El correo electrónico no es válido");
+        }
+        if (!mensaje.value.trim()) {
+            errores.push("⚠️ La descripción no se puede enviar vacía");
+        }
+
+        if (errores.length > 0) {
+            mostrarErrores(errores);
+            return;
+        }
+
+        // ✅ Si no hay errores
+        mostrarExito("✅ ¡Mensaje enviado con éxito!");
+        form.reset();
     });
 
-    // Validación del formulario de contacto
-    const form = document.getElementById("contactForm");
-    if (form) {
-        form.addEventListener("submit", (e) => {
-            e.preventDefault(); // simulación
+    function mostrarErrores(lista) {
+        formMessage.innerHTML = lista.map(e => `<p class="text-red-600">${e}</p>`).join("");
+    }
 
-            const nombre = form.nombre.value.trim();
-            const email = form.email.value.trim();
-            const mensaje = form.mensaje.value.trim();
+    function mostrarExito(texto) {
+        formMessage.textContent = texto;
+        formMessage.classList.add("text-green-600");
+    }
 
-            if (!nombre || !email || !mensaje) {
-                alert("⚠️ Todos los campos son obligatorios.");
-                return;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("⚠️ Por favor ingresa un correo válido.");
-                return;
-            }
-
-            alert("✅ Tu mensaje ha sido enviado (simulación).");
-            form.reset();
-        });
+    function validarCorreo(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email.toLowerCase());
     }
 });

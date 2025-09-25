@@ -30,5 +30,13 @@ namespace Data2Web.Data.Repositories
                 ORDER BY Fecha ASC";
             return await conn.QueryAsync<TimelineEvento>(sql, new { personaId });
         }
+
+        public async Task<IEnumerable<string>> GetImagenesByEventoIdAsync(int eventoId)
+        {
+            using var conn = _factory.Create(); // 👈 Abrir conexión
+            var sql = "SELECT Url FROM TimelineImagenes WHERE EventoId = @EventoId";
+            return await conn.QueryAsync<string>(sql, new { EventoId = eventoId });
+        }
+
     }
 }

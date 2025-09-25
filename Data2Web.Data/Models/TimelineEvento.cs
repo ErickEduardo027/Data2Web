@@ -13,5 +13,9 @@ namespace Data2Web.Data.Models
         public DateTime Fecha { get; set; }
         public string Titulo { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
+
+        // 🔹 Relación con las imágenes
+        public List<string> Imagenes { get; set; } = new();
     }
 }
+

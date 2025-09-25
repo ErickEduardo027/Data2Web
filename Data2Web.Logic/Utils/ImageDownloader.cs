@@ -20,6 +20,18 @@ namespace Data2Web.Logic.Utils
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    Console.WriteLine("⚠️ La URL está vacía, no se intentará descargar.");
+                    return;
+                }
+
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                {
+                    Console.WriteLine($"⚠️ URL inválida: {url}");
+                    return;
+                }
+
                 if (File.Exists(savePath))
                     return; // ya está descargada
 
@@ -27,6 +39,8 @@ namespace Data2Web.Logic.Utils
 
                 var bytes = await _http.GetByteArrayAsync(url);
                 await File.WriteAllBytesAsync(savePath, bytes);
+
+                Console.WriteLine($"✅ Imagen descargada: {savePath}");
             }
             catch (Exception ex)
             {

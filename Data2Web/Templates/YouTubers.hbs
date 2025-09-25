@@ -1,0 +1,15 @@
+<section class="max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6">YouTubers favoritos 📺</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {{#each Items}}
+        <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 flex flex-col items-center">
+            <img src="{{LogoUrl}}" alt="{{Nombre}}" class="w-20 h-20 rounded-full mb-4 object-cover">
+            <h3 class="font-bold text-xl">{{Nombre}}</h3>
+            <p class="text-gray-600 text-sm text-center mb-3">{{Descripcion}}</p>
+            <a href="{{UrlCanal}}" target="_blank" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Visitar canal
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</section>

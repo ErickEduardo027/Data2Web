@@ -9,6 +9,6 @@ namespace Data2Web.Logic.Services.InterfacesDeServicios
 {
     public interface IAnimeSerieService
     {
-        Task<IEnumerable<AnimeSerieDTO>> GetAllAsync();
+        Task<IEnumerable<AnimeSerieDTO>> GetByPersonaIdAsync(int personaId);
     }
 }

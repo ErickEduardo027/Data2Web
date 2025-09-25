@@ -1,12 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+/* 🎨 Estilos personalizados Data2Web para complementar Tailwind */
 
-namespace Data2Web.Presentation.Assets.CSS
-{
-    class styles
-    {
-    }
+/* Línea de tiempo */
+.timeline li {
+    position: relative;
+    padding-left: 1.5rem; /* equivalente a pl-6 */
+    border-left: 2px solid #2563eb; /* border-blue-600 */
 }
+
+    .timeline li::before {
+        content: "•";
+        position: absolute;
+        left: -0.75rem; /* ~ -ml-3 */
+        top: 0;
+        color: #2563eb; /* azul Tailwind */
+        font-size: 1.25rem; /* text-xl */
+        font-weight: bold;
+    }
+
+/* Navbar activo extra (además de Tailwind utilities) */
+.nav-link.active {
+    font-weight: bold;
+    color: #2563eb; /* text-blue-600 */
+    text-decoration: underline;
+}
+
+/* Galerías de imágenes */
+.gallery img {
+    width: 100%; /* w-full */
+    height: 12rem; /* h-48 */
+    object-fit: cover; /* object-cover */
+    border-radius: 0.5rem; /* rounded-lg */
+    transition: transform 0.2s ease; /* transición */
+}
+
+    .gallery img:hover {
+        transform: scale(1.05); /* efecto hover */
+    }
